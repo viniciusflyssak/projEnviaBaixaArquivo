@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2022/11/04 10:53:29.293,=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/11/04 10:54:29.503,C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\uFrmPrincipal.pas=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/11/04 10:54:29.503,C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\uFrmPrincipal.dfm=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/11/04 10:54:43.277,C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\projEnvioArquivos.dproj=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/11/04 11:00:40.637,=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\Unit1.pas</Transaction>
+    <Transaction>2022/11/04 11:00:57.741,C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\DM\uDM.dfm=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\Unit1.dfm</Transaction>
+    <Transaction>2022/11/04 11:00:57.741,C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\DM\uDM.pas=C:\Users\vinic\Documents\Embarcadero\Studio\Projects\projEnvioArquivos\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
