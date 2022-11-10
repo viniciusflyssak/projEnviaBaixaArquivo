@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uDM, FileCtrl;
+  FireDAC.Comp.Client, uDM, FileCtrl, Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmPrincipal = class(TForm)
@@ -18,6 +18,9 @@ type
     edtTitulo: TEdit;
     lblNomeArquivo: TLabel;
     btnBaixarArquivo: TSpeedButton;
+    grdArquivo: TDBGrid;
+    dtsArquivos: TDataSource;
+    qryPesquisaTabela: TFDQuery;
     procedure edtTituloKeyPress(Sender: TObject; var Key: Char);
     procedure btnEnviarArquivoClick(Sender: TObject);
     function geraHexArquivo: String;
@@ -26,7 +29,9 @@ type
     procedure lblNomeArquivoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     function HexStringToBin(HexStr: AnsiString): TMemoryStream;
-    function BuscaArquivo: AnsiString;
+    function BuscaArquivo(idArquivo: integer = 0): AnsiString;
+    procedure FormShow(Sender: TObject);
+    procedure grdArquivoCellClick(Column: TColumn);
   private
     FArquivoSelecionado: String;
   public
@@ -73,6 +78,13 @@ begin
   FArquivoSelecionado := '';
 end;
 
+procedure TfrmPrincipal.FormShow(Sender: TObject);
+begin
+  qryPesquisaTabela.Connection := DM.Connection;
+  qryPesquisaTabela.Open;
+  ShowScrollBar (grdArquivo.Handle, SB_HORZ, FALSE);
+end;
+
 function TfrmPrincipal.geraHexArquivo: String;
   function StreamToHexStr(AStream: TStream): String;
   const
@@ -101,6 +113,11 @@ begin
   finally
     Stream.Free;
   end;
+end;
+
+procedure TfrmPrincipal.grdArquivoCellClick(Column: TColumn);
+begin
+  edtTitulo.Text := qryPesquisaTabela.FieldByName('titulo').AsString;
 end;
 
 procedure TfrmPrincipal.lblNomeArquivoClick(Sender: TObject);
@@ -137,7 +154,7 @@ begin
     HexToBin(PAnsiChar(HexStr), Result.Memory, Result.Size);
 end;
 
-function TfrmPrincipal.BuscaArquivo: AnsiString;
+function TfrmPrincipal.BuscaArquivo(idArquivo: integer): AnsiString;
 var
   qryImagem: TFDQuery;
 begin
@@ -146,8 +163,18 @@ begin
   try
     qryImagem.Connection := DM.Connection;
     qryImagem.Sql.Add(' SELECT TITULO, ARQUIVO, EXTENSAO FROM ARQUIVOS ');
-    qryImagem.Sql.Add(' WHERE TITULO ILIKE :pTitulo ');
-    qryImagem.ParamByName('pTitulo').Value := '%' + edtTitulo.Text + '%';
+    if (trim(edtTitulo.Text) = '' ) and (idArquivo > 0) then
+    begin
+      qryImagem.Sql.Add(' WHERE ID_ARQUIVO = :pIdArquivo ');
+      qryImagem.ParamByName('pIdArquivo').Value := idArquivo;
+    end
+    else
+    begin
+      if Trim(edtTitulo.Text) = '' then
+        raise Exception.Create('Preencha o campo de busca!');
+      qryImagem.Sql.Add(' WHERE TITULO ILIKE :pTitulo ');
+      qryImagem.ParamByName('pTitulo').Value := '%' + edtTitulo.Text + '%';
+    end;
     qryImagem.Open;
     qryImagem.First;
     if not(qryImagem.RecordCount > 0) then
@@ -175,9 +202,7 @@ var
       raise Exception.Create('Selecione ao menos um diretório!');
   end;
 begin
-  if Trim(edtTitulo.Text) = '' then
-    raise Exception.Create('Preencha o campo de busca!');
-  Stream := HexStringToBin(BuscaArquivo);
+  Stream := HexStringToBin(BuscaArquivo(qryPesquisaTabela.FieldByName('id_arquivo').AsInteger));
   try
     Stream.position := 0;
     Stream.SaveToFile(selecionaDir + '\' + FArquivoSelecionado);

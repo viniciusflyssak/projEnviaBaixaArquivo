@@ -4,10 +4,10 @@ object DM: TDM
   Width = 215
   object Connection: TFDConnection
     Params.Strings = (
-      'Database=qsxveaum'
-      'User_Name=qsxveaum'
-      'Server=motty.db.elephantsql.com'
-      'Password=GsBKzufpOex0Vnxs7l2oCW7Efc3PCRJX'
+      'Database=arquivos'
+      'User_Name=postgres'
+      'Server=26.221.39.133'
+      'Password=99811565Vf'
       'DriverID=PG')
     Left = 72
     Top = 80

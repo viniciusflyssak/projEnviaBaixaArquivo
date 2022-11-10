@@ -1,11 +1,11 @@
 object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu]
+  BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Principal'
-  ClientHeight = 137
-  ClientWidth = 774
+  ClientHeight = 464
+  ClientWidth = 876
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,21 +15,22 @@ object frmPrincipal: TfrmPrincipal
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlFundo: TPanel
     Left = 0
     Top = 0
-    Width = 774
-    Height = 137
+    Width = 876
+    Height = 464
     Align = alClient
     TabOrder = 0
     object lblNomeArquivo: TLabel
-      Left = 16
-      Top = 24
-      Width = 435
+      Left = 2
+      Top = 352
+      Width = 777
       Height = 35
-      Caption = 'Nenhum arquivo selecionado!'
+      Caption = 'Nenhum arquivo selecionado! Clique para selecionar!'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -29
@@ -40,13 +41,13 @@ object frmPrincipal: TfrmPrincipal
     end
     object pnlBotoes: TPanel
       Left = 1
-      Top = 77
-      Width = 772
+      Top = 404
+      Width = 874
       Height = 59
       Align = alBottom
       TabOrder = 0
       object btnEnviarArquivo: TSpeedButton
-        Left = 634
+        Left = 736
         Top = 1
         Width = 137
         Height = 57
@@ -62,7 +63,7 @@ object frmPrincipal: TfrmPrincipal
         ExplicitLeft = 624
       end
       object btnBaixarArquivo: TSpeedButton
-        Left = 497
+        Left = 599
         Top = 1
         Width = 137
         Height = 57
@@ -80,7 +81,7 @@ object frmPrincipal: TfrmPrincipal
       object edtTitulo: TEdit
         Left = 1
         Top = 1
-        Width = 490
+        Width = 568
         Height = 57
         Hint = 'Nome do arquivo que deseja enviar/baixar'
         Align = alLeft
@@ -93,9 +94,35 @@ object frmPrincipal: TfrmPrincipal
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
+        TextHint = 'Insira o t'#237'tulo aqui'
         OnKeyPress = edtTituloKeyPress
         ExplicitHeight = 53
       end
     end
+    object grdArquivo: TDBGrid
+      Left = 0
+      Top = 0
+      Width = 874
+      Height = 346
+      DataSource = dtsArquivos
+      TabOrder = 1
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnCellClick = grdArquivoCellClick
+    end
+  end
+  object dtsArquivos: TDataSource
+    DataSet = qryPesquisaTabela
+    Left = 328
+    Top = 160
+  end
+  object qryPesquisaTabela: TFDQuery
+    SQL.Strings = (
+      'select id_arquivo, titulo, extensao from arquivos')
+    Left = 400
+    Top = 160
   end
 end
