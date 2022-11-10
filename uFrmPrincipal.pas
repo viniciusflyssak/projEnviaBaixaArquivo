@@ -32,6 +32,7 @@ type
     function BuscaArquivo(idArquivo: integer = 0): AnsiString;
     procedure FormShow(Sender: TObject);
     procedure grdArquivoCellClick(Column: TColumn);
+    procedure FormShortCut(var Msg: TWMKey; var Handled: Boolean);
   private
     FArquivoSelecionado: String;
   public
@@ -77,6 +78,12 @@ end;
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
   FArquivoSelecionado := '';
+end;
+
+procedure TfrmPrincipal.FormShortCut(var Msg: TWMKey; var Handled: Boolean);
+begin
+ if msg.charcode = 116 then
+   qryPesquisaTabela.Refresh;
 end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
