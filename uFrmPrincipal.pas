@@ -65,6 +65,7 @@ begin
     FreeAndNil(qryInserir);
   end;
   ShowMessage('Arquivo inserido com sucesso!');
+  qryPesquisaTabela.Refresh;
 end;
 
 procedure TfrmPrincipal.edtTituloKeyPress(Sender: TObject; var Key: Char);
@@ -210,6 +211,7 @@ begin
     Stream.free;
   end;
   showmessage('Arquivo gravado com sucesso!');
+  qryPesquisaTabela.Refresh;
 end;
 
 end.
